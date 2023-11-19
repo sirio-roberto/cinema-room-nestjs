@@ -1,22 +1,18 @@
-import { Controller, Get } from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
 import { SeatsService } from './seats.service';
+import { Seat } from './entities/seat.entity';
 
-@Controller('seats')
+@Controller()
 export class SeatsController {
   constructor(private readonly seatsService: SeatsService) {}
 
-  @Get()
+  @Get('seats')
   findAll() {
     return this.seatsService.findAll();
   }
 
-  // @Get(':id')
-  // findOne(@Param('id') id: string) {
-  //   return this.seatsService.findOne(+id);
-  // }
-
-  // @Patch(':id')
-  // update(@Param('id') id: string, @Body() updateSeatDto: UpdateSeatDto) {
-  //   return this.seatsService.update(+id, updateSeatDto);
-  // }
+  @Post('purchase')
+  purchase(@Body() seat: Seat) {
+    return this.seatsService.purchaseTicket(seat);
+  }
 }

@@ -15,7 +15,8 @@ export class Room {
     const seats: Seat[] = [];
     for (let i = 0; i < this.rows; i++) {
       for (let j = 0; j < this.columns; j++) {
-        seats.push(new Seat(i + 1, j + 1));
+        const price = i <= 3 ? 10 : 8;
+        seats.push(new Seat(i + 1, j + 1, price));
       }
     }
     return seats;
