@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpCode, Post } from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, Post, Query } from '@nestjs/common';
 import { SeatsService } from './seats.service';
 import { Seat } from './entities/seat.entity';
 
@@ -21,5 +21,10 @@ export class SeatsController {
   @Post('return')
   returnTicket(@Body() token: any) {
     return this.seatsService.returnTicket(token);
+  }
+
+  @Get('stats')
+  getStats(@Query('password') password: string) {
+    return this.seatsService.getStats(password);
   }
 }

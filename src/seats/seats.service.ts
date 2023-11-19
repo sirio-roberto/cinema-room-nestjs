@@ -72,4 +72,28 @@ export class SeatsService {
     this.room.seats.push(ticket.ticket);
     return { ticket: ticket.ticket };
   }
+
+  getStats(password: string) {
+    if (!password) {
+      throw new HttpException('Missing password!', HttpStatus.BAD_REQUEST);
+    }
+    if (password !== 'super_secret') {
+      throw new HttpException(
+        'The password is wrong!',
+        HttpStatus.UNAUTHORIZED,
+      );
+    }
+
+    const stats = { income: 0, available: 0, purchased: 0 };
+
+    stats.income = Array.from(this.boughtTickets.values())
+      .map((seat) => seat.price)
+      .reduce((p1, p2) => p1 + p2, 0);
+
+    stats.available = this.room.seats.length;
+
+    stats.purchased = this.boughtTickets.size;
+
+    return stats;
+  }
 }

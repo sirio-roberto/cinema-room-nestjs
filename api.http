@@ -5,7 +5,7 @@ POST http://localhost:3000/purchase
 Content-Type: application/json
 
 {
-  "row": 1,
+  "row": 8,
   "column": 2
 }
 ###
@@ -13,48 +13,7 @@ POST http://localhost:3000/return
 Content-Type: application/json
 
 {
-    "token": "fb1eed13-30ce-4d5f-8e3b-2ea2243bc33d"
+    "token": "ccf8a51b-9b54-48b2-8cf4-28743e7a650d"
 }
-
-
-
-# -------invalid requests---------
-# ###
-# POST http://localhost:3000/purchase
-# Content-Type: application/json
-
-# {
-#     "row": 0,
-#     "column": 7
-# }
-# ###
-# POST http://localhost:3000/purchase
-# Content-Type: application/json
-
-# {
-#     "row": 4,
-#     "column": 0
-# }
-# ###
-# POST http://localhost:3000/purchase
-# Content-Type: application/json
-
-# {
-#     "row": 12,
-#     "column": 7
-# }
-# ###
-# POST http://localhost:3000/purchase
-# Content-Type: application/json
-
-# {
-#     "row": 4,
-#     "column": 12
-# }
-# ###
-# POST http://localhost:3000/purchase
-# Content-Type: application/json
-
-# {
-#     "row": 4
-# }
+###
+GET http://localhost:3000/stats?password=super_secret
