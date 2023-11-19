@@ -5,9 +5,9 @@ export class Room {
   columns: number;
   seats: Seat[];
 
-  constructor(rows: number, colunms: number) {
+  constructor(rows: number, columns: number) {
     this.rows = rows;
-    this.columns = colunms;
+    this.columns = columns;
     this.seats = this.initSeatsArray();
   }
 
