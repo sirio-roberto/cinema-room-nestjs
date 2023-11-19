@@ -1,13 +1,14 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { Room } from './entities/room.entity';
 import { Seat } from './entities/seat.entity';
+import { Ticket } from './entities/ticket.entity';
 
 @Injectable()
 export class SeatsService {
   private readonly rows = 9;
   private readonly columns = 9;
   private room = new Room(this.rows, this.columns);
-  private boughtTickets: Seat[] = [];
+  private boughtTickets: Map<string, Seat> = new Map();
 
   findAll() {
     return this.room;
@@ -32,20 +33,24 @@ export class SeatsService {
       );
     }
 
-    const boughtTicketArray = this.room.seats.filter(
+    const chosenSeatArray = this.room.seats.filter(
       (s) => s.row === seat.row && s.column === seat.column,
     );
 
-    if (boughtTicketArray.length === 0) {
+    if (chosenSeatArray.length === 0) {
       throw new HttpException(
         'The ticket has been already purchased!',
         HttpStatus.BAD_REQUEST,
       );
     }
 
-    const boughtTicket = boughtTicketArray[0];
-    this.boughtTickets.push(boughtTicket);
-    this.room.seats = this.room.seats.filter((s) => s !== boughtTicket);
-    return boughtTicket;
+    const chosenSeat = chosenSeatArray[0];
+
+    // save all bought tickets in case users want to return them later
+    const ticket = new Ticket(chosenSeat);
+    this.boughtTickets.set(ticket.token, ticket.ticket);
+
+    this.room.seats = this.room.seats.filter((s) => s !== chosenSeat);
+    return new Ticket(chosenSeat);
   }
 }
