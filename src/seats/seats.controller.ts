@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, Post } from '@nestjs/common';
 import { SeatsService } from './seats.service';
 import { Seat } from './entities/seat.entity';
 
@@ -11,6 +11,7 @@ export class SeatsController {
     return this.seatsService.findAll();
   }
 
+  @HttpCode(200)
   @Post('purchase')
   purchase(@Body() seat: Seat) {
     return this.seatsService.purchaseTicket(seat);
