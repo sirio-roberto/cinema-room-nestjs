@@ -32,18 +32,20 @@ export class SeatsService {
       );
     }
 
-    const boughtTicket = this.room.seats.filter(
-      (s) => s.row === seat.row - 1 && s.column === seat.column - 1,
-    )[0];
+    const boughtTicketArray = this.room.seats.filter(
+      (s) => s.row === seat.row && s.column === seat.column,
+    );
 
-    if (this.boughtTickets.includes(boughtTicket)) {
+    if (boughtTicketArray.length === 0) {
       throw new HttpException(
         'The ticket has been already purchased!',
         HttpStatus.BAD_REQUEST,
       );
     }
 
+    const boughtTicket = boughtTicketArray[0];
     this.boughtTickets.push(boughtTicket);
+    this.room.seats = this.room.seats.filter((s) => s !== boughtTicket);
     return boughtTicket;
   }
 }
