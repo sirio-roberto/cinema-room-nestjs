@@ -16,4 +16,10 @@ export class SeatsController {
   purchase(@Body() seat: Seat) {
     return this.seatsService.purchaseTicket(seat);
   }
+
+  @HttpCode(200)
+  @Post('return')
+  returnTicket(@Body() token: any) {
+    return this.seatsService.returnTicket(token);
+  }
 }

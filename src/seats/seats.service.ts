@@ -51,6 +51,25 @@ export class SeatsService {
     this.boughtTickets.set(ticket.token, ticket.ticket);
 
     this.room.seats = this.room.seats.filter((s) => s !== chosenSeat);
-    return new Ticket(chosenSeat);
+    return ticket;
+  }
+
+  returnTicket(token: any) {
+    if (!token || !token.token) {
+      throw new HttpException('Invalid token body!', HttpStatus.BAD_REQUEST);
+    }
+
+    if (!this.boughtTickets.has(token.token)) {
+      throw new HttpException('Wrong token!', HttpStatus.BAD_REQUEST);
+    }
+
+    const ticket: Ticket = new Ticket(
+      this.boughtTickets.get(token.token),
+      token.token,
+    );
+
+    this.boughtTickets.delete(ticket.token);
+    this.room.seats.push(ticket.ticket);
+    return { ticket: ticket.ticket };
   }
 }

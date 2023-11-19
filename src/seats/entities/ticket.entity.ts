@@ -5,8 +5,8 @@ export class Ticket {
   token: string;
   ticket: Seat;
 
-  constructor(seat: Seat) {
-    this.token = uuidv4();
+  constructor(seat: Seat, token?: string) {
+    this.token = token ? token : uuidv4();
     this.ticket = seat;
   }
 }
